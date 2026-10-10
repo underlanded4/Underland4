@@ -5,186 +5,229 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UNDERLAND V4 — Servidor Minecraft Nórdico</title>
 <style>
-  :root { --oro:#e8b450; --morado:#b565d8; --fondo:#0d0a14; --panel:#171226; --borde:#3a2d55; --texto:#e8dfc8; --apagado:#9a8f7a; }
+  :root {
+    --fondo:#0f1115; --panel:#161b22; --panel2:#1b212b;
+    --borde:#2b3442; --oro:#d4af37; --oro-suave:rgba(212,175,55,.12);
+    --cian:#57d6e6; --fuego:#e0642f; --texto:#e8e2d4; --apagado:#9aa0ab;
+  }
   * { box-sizing:border-box; }
-  body { background:var(--fondo); color:var(--texto); font-family:'Segoe UI',Verdana,sans-serif; margin:0; }
-  nav { position:sticky; top:0; z-index:10; background:rgba(13,10,20,.95); border-bottom:1px solid var(--borde); padding:10px 16px; display:flex; gap:14px; flex-wrap:wrap; justify-content:center; }
-  nav a { color:var(--apagado); text-decoration:none; font-size:.9em; }
+  body { background:var(--fondo); color:var(--texto); font-family:'Segoe UI',Verdana,sans-serif; margin:0; font-size:16px; }
+  nav { position:sticky; top:0; z-index:10; background:rgba(15,17,21,.96); border-bottom:1px solid var(--borde); padding:10px 12px; display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
+  nav a { color:var(--apagado); text-decoration:none; font-size:.85em; }
   nav a:hover { color:var(--oro); }
-  header { text-align:center; padding:70px 20px 50px; background:radial-gradient(ellipse at 50% 0%,#2a1a4a 0%,#0d0a14 65%); animation:respira 6s ease-in-out infinite alternate; }
-  @keyframes respira { from { filter:brightness(1); } to { filter:brightness(1.15); } }
-  h1 { color:var(--oro); letter-spacing:6px; font-size:3.2em; margin:0; text-shadow:0 0 30px rgba(232,180,80,.4); }
-  .sub { color:var(--apagado); font-style:italic; font-size:1.2em; }
-  .ipbox { margin:26px auto 8px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
-  .ip { padding:12px 24px; border:2px solid var(--oro); color:var(--oro); font-size:1.25em; letter-spacing:1px; border-radius:8px; background:rgba(232,180,80,.06); }
-  button.copiar { padding:12px 22px; background:var(--oro); color:#1a1030; font-weight:bold; border:none; border-radius:8px; cursor:pointer; font-size:1em; }
-  button.copiar:hover { filter:brightness(1.1); }
-  .versiones span { display:inline-block; margin:6px; padding:6px 16px; border:1px solid var(--borde); border-radius:20px; color:var(--apagado); font-size:.9em; }
-  main { max-width:900px; margin:0 auto; padding:20px; }
-  .tarjetas { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin:20px 0; }
-  .tarjeta { background:var(--panel); border:1px solid var(--borde); border-radius:10px; padding:18px; }
+  header { text-align:center; padding:56px 16px 40px; background:radial-gradient(ellipse at 50% 0%,#2a2113 0%,#0f1115 65%); }
+  h1 { color:var(--oro); letter-spacing:5px; font-size:clamp(1.8em,7vw,3em); margin:0; text-shadow:0 0 28px rgba(212,175,55,.4); }
+  .sub { color:var(--apagado); font-style:italic; }
+  .ipbox { margin:22px auto 8px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .ip { padding:12px 20px; border:2px solid var(--oro); color:var(--oro); font-size:1.1em; border-radius:8px; background:var(--oro-suave); word-break:break-all; }
+  button.copiar { padding:12px 20px; background:var(--oro); color:#141414; font-weight:bold; border:none; border-radius:8px; cursor:pointer; }
+  .versiones span { display:inline-block; margin:6px; padding:6px 14px; border:1px solid var(--borde); border-radius:20px; color:var(--apagado); font-size:.85em; }
+  main { max-width:940px; margin:0 auto; padding:16px; }
+  .tabs { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:18px 0 6px; }
+  .tabs button { background:var(--panel); color:var(--apagado); border:1px solid var(--borde); border-radius:10px; padding:12px 14px; cursor:pointer; font-size:.95em; }
+  .tabs button.activo { color:#141414; background:var(--oro); border-color:var(--oro); font-weight:bold; }
+  .tab { display:none; }
+  .tab.activo { display:block; }
+  .tarjetas { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin:14px 0; }
+  .tarjeta { background:var(--panel); border:1px solid var(--borde); border-radius:10px; padding:16px; }
   .tarjeta b { color:var(--oro); }
-  details { background:var(--panel); border:1px solid var(--borde); border-radius:10px; margin:12px 0; overflow:hidden; }
-  summary { cursor:pointer; padding:16px 20px; font-size:1.15em; color:var(--morado); font-weight:bold; list-style:none; }
-  summary::-webkit-details-marker { display:none; }
-  summary::before { content:'ᚱ '; color:var(--oro); }
-  details[open] summary { border-bottom:1px solid var(--borde); }
-  details .cuerpo { padding:6px 22px 20px; line-height:1.9; }
-  details .cuerpo ul, details .cuerpo ol { text-align:left; margin:8px 0; padding-left:22px; }
-  table { width:100%; border-collapse:collapse; margin:10px 0; font-size:.92em; }
-  th, td { border:1px solid var(--borde); padding:7px 10px; text-align:left; }
-  th { color:var(--oro); }
-  .btn { display:inline-block; margin:10px 6px; padding:14px 30px; background:var(--oro); color:#1a1030; font-weight:bold; text-decoration:none; border-radius:8px; font-size:1.05em; }
-  .btn.ghost { background:transparent; border:2px solid var(--morado); color:var(--morado); }
-  code { background:#241a3d; padding:2px 8px; border-radius:4px; color:var(--oro); }
-  footer { text-align:center; padding:34px; color:#6a6255; font-size:.9em; }
-  .nota { color:var(--apagado); font-size:.93em; }
+  .tarjeta.fuego { border-color:var(--fuego); }
+  .tarjeta.cian { border-color:var(--cian); }
+  h2 { color:var(--oro); font-size:1.3em; margin:22px 0 8px; }
+  h3 { color:var(--cian); font-size:1.05em; margin:16px 0 6px; }
+  ul, ol { line-height:1.9; padding-left:22px; margin:6px 0; }
+  code { background:#222a36; padding:2px 8px; border-radius:4px; color:var(--oro); font-size:.92em; }
+  .cmds { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0; }
+  .cmd { background:var(--panel2); border:1px solid var(--borde); border-radius:8px; padding:8px 10px; font-size:.9em; cursor:pointer; }
+  .cmd:hover { border-color:var(--oro); }
+  .cmd code { background:none; padding:0; }
+  .busca { width:100%; padding:12px 14px; border-radius:10px; border:1px solid var(--borde); background:var(--panel); color:var(--texto); font-size:1em; margin:10px 0; }
+  .tabla { overflow-x:auto; margin:10px 0; border-radius:10px; border:1px solid var(--borde); }
+  table { width:100%; border-collapse:collapse; font-size:.9em; min-width:420px; }
+  th, td { border-bottom:1px solid var(--borde); padding:8px 10px; text-align:left; }
+  th { color:var(--oro); background:var(--panel2); }
+  .btn { display:inline-block; margin:10px 6px; padding:13px 26px; background:var(--oro); color:#141414; font-weight:bold; text-decoration:none; border-radius:8px; }
+  .btn.ghost { background:transparent; border:2px solid var(--cian); color:var(--cian); }
+  footer { text-align:center; padding:30px; color:#6a7078; font-size:.9em; }
+  .nota { color:var(--apagado); font-size:.92em; }
+  .oculto { display:none !important; }
 </style>
 </head>
 <body>
 <nav>
-  <a href="#entrar">Entrar</a><a href="#acceso">Acceso</a><a href="#razas">Razas</a><a href="#niveles">Niveles</a><a href="#forja">Forja</a><a href="#yunque">Yunque</a><a href="#armas">Armas</a><a href="#runas">Runas</a><a href="#mascotas">Mascotas</a><a href="#cofres">Cofres</a><a href="#invasiones">Invasiones</a><a href="#eco">Economía</a><a href="#muerte">Muerte</a><a href="#misiones">Misiones</a><a href="#comandos">Comandos</a><a href="#reglas">Reglas</a>
+  <a href="#entrar">Entrar</a><a href="#tabs">Guía</a><a href="#comandos">Comandos</a><a href="#excalibur">Excalibur</a><a href="https://github.com/underlanded4/Underland4">GitHub</a>
 </nav>
-<header>
+<header id="entrar">
   <h1>✦ UNDERLAND V4 ✦</h1>
   <p class="sub">Forja tu saga entre dioses y runas</p>
   <div class="ipbox">
     <span class="ip" id="ip">underland4.play.minekube.net</span>
-    <button class="copiar" onclick="copiarIP()">⧉ Copiar IP</button>
+    <button class="copiar" onclick="copiar('underland4.play.minekube.net',this)">⧉ Copiar IP</button>
   </div>
   <div class="versiones"><span>☕ Java 1.21.4</span><span>📱 Bedrock (Geyser)</span></div>
-</header>
-<main>
-
-<section id="entrar">
   <div class="tarjetas">
     <div class="tarjeta"><b>☕ Java</b><br>Multijugador → Añadir servidor → pega la IP → acepta el pack de recursos.</div>
     <div class="tarjeta"><b>📱 Bedrock</b><br>Jugar → Servidores → añade la IP (puerto 19132).</div>
-    <div class="tarjeta"><b>⬇ Sin pack</b><br>¿Error al descargar? Bájalo aquí y ponlo en tu carpeta <i>resourcepacks</i>:<br><br><a class="btn" href="https://github.com/underlanded4/Underland4/releases/latest/download/resource_pack.zip">Descargar pack</a></div>
+    <div class="tarjeta"><b>⬇ Sin pack</b><br>¿Error al descargar? Bájalo aquí y ponlo en <i>resourcepacks</i>:<br><br><a class="btn" href="https://github.com/underlanded4/Underland4/releases/latest/download/resource_pack.zip">Descargar pack</a></div>
   </div>
-</section>
+</header>
+<main id="tabs">
+  <div class="tabs">
+    <button class="activo" onclick="tab('t1',this)">🚀 Inicio &amp; Acceso</button>
+    <button onclick="tab('t2',this)">⚒️ Forja &amp; Yunque 6x6</button>
+    <button onclick="tab('t3',this)">💰 Economía &amp; Monedas</button>
+    <button onclick="tab('t4',this)">⚔️ Equipo &amp; Runas</button>
+    <button onclick="tab('t5',this)">📜 Reglas &amp; Misiones</button>
+  </div>
 
-<details id="acceso"><summary>🔑 Cuentas y acceso</summary><div class="cuerpo"><ul>
-  <li>Al entrar por primera vez regístrate: <code>/register &lt;clave&gt; &lt;clave&gt;</code>. Después entra con <code>/login &lt;clave&gt;</code>.</li>
-  <li>Tienes 120 segundos para loguearte y la sesión dura <b>12 horas</b> desde la misma conexión.</li>
-  <li>Tu personaje (raza, clase, progreso) queda ligado a tu <b>nombre</b>: entra siempre con el mismo nombre en Java y Bedrock.</li>
-  <li>Espera unos segundos tras entrar antes de escribir comandos (anti-spam).</li>
-</ul></div></details>
+  <div class="tab activo" id="t1">
+    <h2>🚀 Inicio &amp; Acceso</h2>
+    <div class="tarjetas">
+      <div class="tarjeta"><b>🔑 Registro</b><br>Primera vez: <code>/register &lt;clave&gt; &lt;clave&gt;</code>. Después: <code>/login &lt;clave&gt;</code>. Tienes 120 segundos y la sesión dura 12 horas.</div>
+      <div class="tarjeta"><b>🧬 Razas y clases</b><br>Elige raza mortal (humano, alfar, dvergar…) + clase divina: <b>Custodes</b> (+defensa), <b>Architect</b> (equipo durable), <b>Ragnarok</b> (+daño). <code>/razas</code> <code>/clases</code> <code>/perfil</code>. Tu personaje queda ligado a tu <b>nombre</b>.</div>
+      <div class="tarjeta"><b>📈 Niveles</b><br>13 habilidades al 100 + Power al 256. Curva exigente; diamante, esmeralda y debris dan mucha más experiencia. Power da +1 punto de stats (<code>/skills</code>). 20 trabajos al 50 con hitos 10/25/50 (<code>/trabajos</code>).</div>
+    </div>
+    <h3>⚡ Acceso rápido (clic para copiar)</h3>
+    <div class="cmds" id="rapidos">
+      <span class="cmd" data-k="menu principal santuario" onclick="copiar('/menu',this)"><code>/menu</code></span>
+      <span class="cmd" data-k="yunque runico forja crafteo" onclick="copiar('/yunque',this)"><code>/yunque</code></span>
+      <span class="cmd" data-k="cuaderno recetas patrones" onclick="copiar('/cuaderno',this)"><code>/cuaderno</code></span>
+      <span class="cmd" data-k="banco dinero oro tesoro" onclick="copiar('/banco',this)"><code>/banco</code></span>
+      <span class="cmd" data-k="perfil stats" onclick="copiar('/perfil',this)"><code>/perfil</code></span>
+      <span class="cmd" data-k="viajes bifrost teleport" onclick="copiar('/viajes',this)"><code>/viajes</code></span>
+      <span class="cmd" data-k="extras kits loteria correo" onclick="copiar('/extras',this)"><code>/extras</code></span>
+      <span class="cmd" data-k="muerte cadaver back" onclick="copiar('/muerte',this)"><code>/muerte</code></span>
+      <span class="cmd" data-k="metas objetivos diarias" onclick="copiar('/metas',this)"><code>/metas</code></span>
+      <span class="cmd" data-k="tribu clan" onclick="copiar('/tribu',this)"><code>/tribu</code></span>
+      <span class="cmd" data-k="register login clave cuenta" onclick="copiar('/register ',this)"><code>/register</code></span>
+      <span class="cmd" data-k="anuncios noticias" onclick="copiar('/anuncios',this)"><code>/anuncios</code></span>
+    </div>
+  </div>
 
-<details open id="razas"><summary>🧬 Razas y clases</summary><div class="cuerpo"><ul>
-  <li>Elige <b>raza mortal</b> (humano, elfo/alfar, enano/dvergar…) y súmale una <b>clase divina</b>: <b>Custodes</b> (+defensa), <b>Architect</b> (equipo que dura más), <b>Ragnarok</b> (+daño cuerpo a cuerpo).</li>
-  <li><b>Enanos:</b> únicos que pueden usar la Forja y el Yunque Rúnico. Sin penalización por peso legendario.</li>
-  <li><b>Alfar:</b> dueños de la Espada Estelar; otras razas sufren debilidad al empuñarla.</li>
-  <li>Comandos: <code>/razas</code>, <code>/clases</code>, <code>/perfil</code>.</li>
-</ul></div></details>
+  <div class="tab" id="t2">
+    <h2>⚒️ Forja &amp; Yunque 6x6</h2>
+    <ul>
+      <li>Solo enanos (dioses exentos). Habilidad forjando: 0 aprendiz, 5 guerrero, 15 legendario. Recetas y patrones en <b>Cuaderno</b>, metales en <b>Materiales</b>, fundición en <b>Hornos</b>.</li>
+      <li>Cada arma sale con <b>ficha completa</b>: daño, durabilidad, creador, calidad, rareza, filo, defecto y mejoras.</li>
+    </ul>
+    <h3>🗿 Mecánica del Yunque Rúnico (6x6)</h3>
+    <ol>
+      <li>Forja el <b>Yunque Rúnico</b> (receta cara, solo enanos hab. 15) y colócalo: levanta su <b>altar 8x8</b> con cuenta regresiva.</li>
+      <li><b>Clic derecho</b> → interfaz de <b>27 casillas</b>: pon los materiales <b>en orden</b> según el patrón del Cuaderno (los vidrios negros delimitan la parrilla, no cuentan).</li>
+      <li>Al cerrar empieza el crafteo con <b>temporizador por calidad</b>: quédate dentro del <b>círculo de fuego</b> o se pausa.</li>
+      <li>El arma sale <b>expulsada fuera</b> con su ficha. Si falta algo, todo se devuelve, cero pérdidas.</li>
+    </ol>
+    <p class="nota">Atajo: <code>/yunque</code> mirando al yunque. Mesa grande: <code>/mesaforja</code>.</p>
+    <h3>✨ Rarezas (Común → Místico)</h3>
+    <div class="tabla"><table id="rarezas">
+      <tr><th>Rareza</th><th>Filo</th><th>Daño extra</th></tr>
+      <tr><td>Común</td><td>V</td><td>+3</td></tr><tr><td>Algo Mejor</td><td>VI</td><td>+3.5</td></tr><tr><td>Mejor</td><td>VII</td><td>+4</td></tr><tr><td>Algo Raro</td><td>VIII</td><td>+4.5</td></tr><tr><td>Raro</td><td>IX</td><td>+5</td></tr><tr><td>Muy Raro</td><td>X</td><td>+5.5</td></tr><tr><td>Algo Legendario</td><td>XI</td><td>+6</td></tr><tr><td>Legendario</td><td>XII</td><td>+6.5</td></tr><tr><td>Muy Legendario</td><td>XIV</td><td>+7.5</td></tr><tr><td>Místico</td><td>XVI</td><td>+8.5</td></tr>
+    </table></div>
+    <p class="nota">Un Filo V normal da +3. Un Místico da +8.5: casi el triple. La rareza mejora con tu habilidad, nivel y enano ayudante.</p>
+  </div>
 
-<details id="niveles"><summary>📈 Niveles y habilidades</summary><div class="cuerpo"><ul>
-  <li><b>13 habilidades</b> (minería, tala, pesca, agricultura, excavación, combate…) hasta nivel 100 + <b>Power</b> hasta 256.</li>
-  <li>Curva exigente: cada nivel cuesta el triple que en vainilla. Los minerales buenos (diamante, esmeralda, debris) dan mucha más experiencia.</li>
-  <li>Cada nivel de Power da <b>+1 punto de stats</b> para gastar en tu árbol: <code>/skills</code>.</li>
-  <li><b>Trabajos:</b> 20 oficios (minero, leñador, pescador…) hasta nivel 50, con hitos premiados en 10/25/50: <code>/trabajos</code>.</li>
-</ul></div></details>
+  <div class="tab" id="t3">
+    <h2>💰 Economía &amp; Sistema de Monedas</h2>
+    <div class="tarjeta fuego"><b>🪙 Meta: 100 monedas de oro</b><br>La economía nórdica premia acumular: gana oro con <b>saqueos</b> (invasiones y jefes), <b>guerra</b> (PvP, duelos, K/D de tribu) y <b>misiones/metas</b> ($2500 por reto). Guarda en el banco (+2% diario), apuesta en lotería o fórjalo todo en la Forja.</div>
+    <ul>
+      <li><b>Banco</b> (<code>/banco</code>): deposita y gana +2% diario. <b>Correo</b> (<code>/correo &lt;jugador&gt;</code>) aunque esté offline.</li>
+      <li><b>Lotería rúnica:</b> tickets con número de $100 a $50.000 (<code>/loteria comprar [cant] [apuesta]</code>), <code>/loteria misnumeros</code>. Rollover, reparto en empates, consuelo. Gratis cada 5.</li>
+      <li><b>Kits</b> (<code>/kits</code>), <b>Duelos</b> (<code>/duelo &lt;jugador&gt; [apuesta]</code>), <b>mercado</b> y <b>mercader errante</b>.</li>
+      <li><b>Tribus:</b> [TRU] Hijos del Trueno, [ODIN] Cuervos de Odín, [YGG] Guardianes del Yggdrasil, [OSO] Osos del Norte (<code>/tribu</code>: banco, K/D, alianzas).</li>
+    </ul>
+  </div>
 
-<details id="forja"><summary>🔨 Forja Enana y rarezas</summary><div class="cuerpo"><ul>
-  <li>Solo enanos (dioses exentos). Sube tu <b>habilidad de forja</b> forjando: 0 aprendiz, 5 guerrero, 15 legendario.</li>
-  <li><b>Calidades:</b> Aprendiz (nivel 10 + hierro) → Guerrero (nivel 25 + diamantes) → Legendario (nivel 40 + netherita).</li>
-  <li>Cada arma sale con <b>ficha completa</b>: daño calculado, durabilidad, creador, calidad, rareza, filo, defecto y mejoras.</li>
-  <li><b>Sangrado:</b> golpear con arma forjada aplica wither (hasta 10s en Místico) con llamas del alma.</li>
-  <li>Las piezas legendarias <b>pesan</b>: lentitud si no eres enano. Tabla en <code>/forja</code> → <b>Arsenal</b>, recetas en <b>Cuaderno</b>, metales en <b>Materiales</b> y fundición en <b>Hornos</b>.</li>
-</ul>
-<table><tr><th>Rareza</th><th>Filo</th><th>Daño extra</th></tr>
-<tr><td>Común</td><td>V</td><td>+3</td></tr><tr><td>Algo Mejor</td><td>VI</td><td>+3.5</td></tr><tr><td>Mejor</td><td>VII</td><td>+4</td></tr><tr><td>Algo Raro</td><td>VIII</td><td>+4.5</td></tr><tr><td>Raro</td><td>IX</td><td>+5</td></tr><tr><td>Muy Raro</td><td>X</td><td>+5.5</td></tr><tr><td>Algo Legendario</td><td>XI</td><td>+6</td></tr><tr><td>Legendario</td><td>XII</td><td>+6.5</td></tr><tr><td>Muy Legendario</td><td>XIV</td><td>+7.5</td></tr><tr><td>Místico</td><td>XVI</td><td>+8.5</td></tr></table>
-<p class="nota">Un Filo V normal da +3. Un Místico da +8.5: casi el triple.</p></div></details>
+  <div class="tab" id="t4">
+    <h2>⚔️ Equipamiento &amp; Runas</h2>
+    <ul>
+      <li><b>Martillo de Enano:</b> 3x3, daño en área, pesado, debilidad si no eres enano. <b>Espada Estelar</b> (alfar), <b>Espada Rúnica</b> (gacha), <b>Pico de Guerra</b> (3x3 + filo), <b>Njordr Supremo</b>, <b>Venda Rúnica</b> (cura fracturas).</li>
+      <li><b>Efectos:</b> pico aturde/ciega/fractura, martillo contunde, estelar marca y juzga. <b>Sangrado</b> wither hasta 10s. <b>Heridas:</b> bajo de vida = fractura + hemorragia.</li>
+      <li><b>Runas</b> (<code>/runas</code>): incrusta libros, Herrero, Tinkerer, Kits. <b>Tienda:</b> Experiencia, Fundición, Haste, Rabia, Rayos, Robo de vida, MultiFlecha, VetaMineral, Alas…</li>
+      <li><b>Mascotas</b> (<code>/cosmeticos</code>, <code>/mascotas</code>): buffs al invocar. <b>Cofres:</b> diario (<code>/daily</code>) y rúnico gacha ($200 en <code>/extras</code>). <b>Invasiones:</b> withers cada 2 min si AFK/solo o 3+ juntos.</li>
+    </ul>
+  </div>
 
-<details id="yunque"><summary>🗿 Yunque Rúnico (sistema 6x6)</summary><div class="cuerpo"><ol>
-  <li>Consigue el <b>Yunque Rúnico</b> forjándolo (receta cara, solo enanos hab. 15).</li>
-  <li>Colócalo: levanta su <b>altar 8x8</b> con cuenta regresiva.</li>
-  <li><b>Clic derecho</b> → interfaz de 27 casillas: pon los materiales <b>en orden</b> según el patrón del Cuaderno.</li>
-  <li>Al cerrar empieza el crafteo con <b>temporizador por calidad</b>: quédate dentro del <b>círculo de fuego</b>.</li>
-  <li>El arma sale <b>expulsada fuera</b> con su ficha. Si falta algo, todo se devuelve, cero pérdidas.</li>
-</ol><p class="nota">Comando directo alternativo: <code>/yunque</code> mirando al yunque.</p></div></details>
+  <div class="tab" id="t5">
+    <h2>📜 Reglas &amp; Misiones</h2>
+    <ul>
+      <li><b>Misiones</b> (<code>/misiones</code>, top <code>/quests top</code>), <b>Metas</b> (<code>/objetivos</code>), <b>Anuncios</b> (<code>/anuncios</code>), <b>Ranking</b> (<code>/ranking</code>).</li>
+      <li><b>Muerte:</b> cadáver con tu cara (solo tú, 1 día), <code>/muerte</code>, <code>/back</code> (3/día + vuelta gratis).</li>
+      <li>Respeta a los demás. Nada de grief ni trampas. PvP donde se permite. Los dioses tienen la última palabra.</li>
+    </ul>
+    <a class="btn ghost" href="https://github.com/underlanded4/Underland4">Ver proyecto en GitHub</a>
+  </div>
 
-<details id="armas"><summary>⚔️ Armas únicas</summary><div class="cuerpo"><ul>
-  <li><b>Martillo de Enano:</b> pica en área 3x3, daño en área al golpear, lento de llevar, debilidad si no eres enano.</li>
-  <li><b>Espada Estelar:</b> hoja cian con guardia dorada para los alfar; debilidad a otras razas.</li>
-  <li><b>Espada Rúnica:</b> premio mayor del cofre rúnico, con aura de poder.</li>
-  <li><b>Pico de Guerra:</b> híbrido que pica en 3x3 y pega como espada, con filo y rareza.</li>
-  <li><b>Martillo Njordr Supremo</b> y <b>Venda Rúnica</b> (cura fracturas y sangrado).</li>
-  <li><b>Efectos de combate:</b> el pico aturde y ciega, el martillo contunde, la estelar marca y juzga. <b>Heridas:</b> bajo de vida sufres fractura + hemorragia.</li>
-</ul></div></details>
+  <div id="comandos">
+    <h2>⌨️ Buscador</h2>
+    <input class="busca" id="busca" placeholder="Filtra comandos y recetas: yunque, raza, monedas…" oninput="filtrar(this.value)">
+    <div class="cmds" id="todos">
+      <span class="cmd" data-k="menu santuario principal"><code>/menu</code></span>
+      <span class="cmd" data-k="perfil stats"><code>/perfil</code></span>
+      <span class="cmd" data-k="viajes bifrost"><code>/viajes</code></span>
+      <span class="cmd" data-k="extras"><code>/extras</code></span>
+      <span class="cmd" data-k="volver atras"><code>/volver</code></span>
+      <span class="cmd" data-k="kits kit inicial diario semanal"><code>/kits</code></span>
+      <span class="cmd" data-k="yunque runico forja"><code>/yunque</code></span>
+      <span class="cmd" data-k="cuaderno recetas patrones"><code>/cuaderno</code></span>
+      <span class="cmd" data-k="metas objetivos diarias"><code>/metas</code></span>
+      <span class="cmd" data-k="banco tesoro oro"><code>/banco</code></span>
+      <span class="cmd" data-k="correo cartas"><code>/correo</code></span>
+      <span class="cmd" data-k="loteria sorteo numeros apuesta"><code>/loteria</code></span>
+      <span class="cmd" data-k="duelo apuesta pvp"><code>/duelo</code></span>
+      <span class="cmd" data-k="tribu clan"><code>/tribu</code></span>
+      <span class="cmd" data-k="muerte cadaver"><code>/muerte</code></span>
+      <span class="cmd" data-k="back volver muerte gratis"><code>/back</code></span>
+      <span class="cmd" data-k="misiones quests puntos"><code>/misiones</code></span>
+      <span class="cmd" data-k="ranking top niveles"><code>/ranking</code></span>
+      <span class="cmd" data-k="trabajos jobs oficios"><code>/trabajos</code></span>
+      <span class="cmd" data-k="skills habilidades puntos"><code>/skills</code></span>
+      <span class="cmd" data-k="razas clases mortal divina"><code>/razas</code></span>
+      <span class="cmd" data-k="runas encantamientos libros"><code>/runas</code></span>
+      <span class="cmd" data-k="daily diarias cofre llaves"><code>/daily</code></span>
+      <span class="cmd" data-k="mascotas pets"><code>/mascotas</code></span>
+      <span class="cmd" data-k="anuncios noticias"><code>/anuncios</code></span>
+      <span class="cmd" data-k="monedas economia oro"><code>/banco</code></span>
+      <span class="cmd" data-k="forja herreria crafteo"><code>/forja</code></span>
+    </div>
+    <p class="nota">Staff: <code>/ureload</code> (sk, dm, mm, ce, crate, fmm).</p>
+  </div>
 
-<details id="runas"><summary>ᚱ Runas y encantamientos</summary><div class="cuerpo"><ul>
-  <li>Incrusta <b>libros de runas</b> en tu equipo (<code>/runas</code> → Encantador), mejóralos con el Herrero y el Tinkerer, reclama <b>Kits Rúnicos</b>.</li>
-  <li><b>Tienda de runas:</b> compra libros con oro (Experiencia, Fundición, Haste, Rabia, Rayos, Robo de vida, MultiFlecha, VetaMineral, Alas…).</li>
-</ul></div></details>
-
-<details id="mascotas"><summary>🐺 Mascotas</summary><div class="cuerpo"><ul>
-  <li>Compra compañeros en la <b>tienda de mascotas</b> (<code>/cosmeticos</code>): cada una da un buff al invocarla (velocidad, salto, visión nocturna, fuerza, regeneración…).</li>
-  <li>Invócalas, móntalas o póntelas de sombrero con <code>/mascotas</code>. Cambia tu skin con el guardarropa.</li>
-</ul></div></details>
-
-<details id="cofres"><summary>🎁 Cofres y premios</summary><div class="cuerpo"><ul>
-  <li><b>Cofre Diario</b> (<code>/daily</code>): entra cada día por llaves y premios.</li>
-  <li><b>Cofre Rúnico (gacha):</b> llaves por $200 en <code>/extras</code>. Comunes frecuentes, épicos con anuncio… y 0,1% de leyenda (tótem Yggdrasil, faro de Asgard, bloque supremo, <b>Espada Rúnica</b>).</li>
-</ul></div></details>
-
-<details id="invasiones"><summary>👹 Invasiones</summary><div class="cuerpo"><ul>
-  <li>Cada 2 minutos el reino acecha: <b>esqueletos wither</b> aparecen a 15 metros y te persiguen.</li>
-  <li>Solo si llevas quieto/solo un rato (ojo AFKs) o si hay <b>3+ jugadores juntos</b>.</li>
-  <li>Niveles 1-15 (Recluta, Guerrero, Campeón) con más vida, velocidad y fuerza; al morir sueltan huesos, hierro, diamantes, <b>runas</b> y hasta tótems.</li>
-</ul></div></details>
-
-<details id="eco"><summary>💰 Economía y vida social</summary><div class="cuerpo"><ul>
-  <li><b>Banco</b> (<code>/banco</code> o Bóveda): deposita oro y gana +2% diario.</li>
-  <li><b>Correo</b> (<code>/correo &lt;jugador&gt;</code>): escríbele aunque esté offline.</li>
-  <li><b>Lotería rúnica:</b> tickets con número de $100 a $50.000 (<code>/loteria comprar [cant] [apuesta]</code>), mira los tuyos con <code>/loteria misnumeros</code>. Sorteo con rollover, reparto en empates y premio de consuelo. Gratis cada 5 acumulados.</li>
-  <li><b>Kits:</b> inicial, diario y semanal (<code>/kits</code>).</li>
-  <li><b>Duelos</b> (<code>/duelo &lt;jugador&gt; [apuesta]</code>), <b>mercado</b> y <b>mercader errante</b> con descuentos.</li>
-  <li><b>Tribus fundadas:</b> <b>Hijos del Trueno</b> [TRU], <b>Cuervos de Odín</b> [ODIN], <b>Guardianes del Yggdrasil</b> [YGG] y <b>Osos del Norte</b> [OSO]. Míralas en <code>/tribu</code>: banco común, K/D, alianzas y rivalidades.</li>
-</ul></div></details>
-
-<details id="muerte"><summary>💀 Muerte y regreso</summary><div class="cuerpo"><ul>
-  <li>Al morir dejas tu <b>cadáver</b> con tu cara: clic derecho para recuperar (solo tú, dura 1 día).</li>
-  <li><code>/muerte</code> repite dónde, cómo y cuándo moriste.</li>
-  <li><code>/back</code>: 3 usos diarios + <b>vuelta gratis a tu muerte</b>.</li>
-</ul></div></details>
-
-<details id="misiones"><summary>📜 Misiones, metas y avisos</summary><div class="cuerpo"><ul>
-  <li><b>Misiones</b> (<code>/misiones</code>): sagas con puntos y top (<code>/quests top</code>).</li>
-  <li><b>Metas diarias</b> (<code>/objetivos</code>): minar, cazar y PvP por $2500 c/u.</li>
-  <li><b>Anuncios</b> (<code>/anuncios</code>): noticias + consejos automáticos.</li>
-  <li><b>Ranking</b> (<code>/ranking</code>, <code>/rtop</code>): niveles, cazadores, asesinos, millonarios.</li>
-</ul></div></details>
-
-<details id="comandos"><summary>⌨️ Comandos útiles</summary><div class="cuerpo">
-  <p><code>/menu</code> <code>/perfil</code> <code>/viajes</code> <code>/extras</code> <code>/volver</code> <code>/kits</code> <code>/yunque</code> <code>/cuaderno</code> <code>/metas</code></p>
-  <p class="nota">Atajo universal de recargas (staff): <code>/ureload</code></p>
-</div></details>
-
-<details id="reglas"><summary>📜 Reglas</summary><div class="cuerpo"><ul>
-  <li>Respeta a los demás mortales. Nada de grief ni trampas.</li>
-  <li>El PvP solo donde el reino lo permite.</li>
-  <li>Los dioses (staff) tienen la última palabra.</li>
-</ul><a class="btn ghost" href="https://github.com/underlanded4/Underland4">Ver proyecto en GitHub</a></div></details>
-
-<section style="max-width:900px;margin:30px auto;padding:0 20px;">
-  <details id="excalibur"><summary>⚔️ Pack recomendado: Excalibur</summary><div class="cuerpo">
-    <p>Para ver las armas con su estilo original recomendamos instalar el pack <b>Excalibur</b> (16x, estilo medieval). Descárgalo desde su página oficial:</p>
-    <a class="btn" href="https://www.curseforge.com/minecraft/texture-packs/excalibur">⬇ Descargar en CurseForge</a>
-    <a class="btn ghost" href="https://modrinth.com/resourcepack/excal">⬇ Descargar en Modrinth</a>
-    <p>Cómo instalarlo: descarga el zip para tu versión, mételo en la carpeta <code>resourcepacks</code> de tu Minecraft y actívalo en <code>Opciones → Paquetes de recursos</code>.</p>
-    <p class="nota" style="margin-top:14px;">⚠️ <b>Este pack no es nuestro ni nos pertenece.</b> Excalibur es obra de <b>Maffhew</b> (todos los derechos reservados). Nosotros solo lo recomendamos como complemento visual; no lo modificamos ni lo distribuimos. Descárgalo siempre desde sus páginas oficiales, bajo tu responsabilidad.</p>
-  </div></details>
-</section>
+  <div id="excalibur">
+    <h2>⚔️ Pack recomendado: Excalibur</h2>
+    <p>Para ver las armas con su estilo original recomendamos <b>Excalibur</b> (16x medieval):</p>
+    <a class="btn" href="https://www.curseforge.com/minecraft/texture-packs/excalibur">⬇ CurseForge</a>
+    <a class="btn ghost" href="https://modrinth.com/resourcepack/excal">⬇ Modrinth</a>
+    <p>Descarga el zip, mételo en <code>resourcepacks</code> y actívalo en Opciones.</p>
+    <p class="nota">⚠️ <b>No es nuestro.</b> Excalibur es obra de <b>Maffhew</b> (todos los derechos reservados). Solo lo recomendamos; descárgalo de sus páginas oficiales.</p>
+  </div>
 </main>
 <footer>UNDERLAND V4 — que los dioses te sean propicios.</footer>
 <script>
-function copiarIP() {
-  var ip = document.getElementById('ip').innerText;
-  if (navigator.clipboard) { navigator.clipboard.writeText(ip); }
-  else { var t = document.createElement('textarea'); t.value = ip; document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t); }
-  event.target.innerText = '✓ ¡Copiada!';
-  setTimeout(function(){ event.target.innerText = '⧉ Copiar IP'; }, 2000);
+function tab(id, btn) {
+  var ts = document.querySelectorAll('.tab');
+  for (var i = 0; i < ts.length; i++) ts[i].classList.remove('activo');
+  document.getElementById(id).classList.add('activo');
+  var bs = document.querySelectorAll('.tabs button');
+  for (var j = 0; j < bs.length; j++) bs[j].classList.remove('activo');
+  btn.classList.add('activo');
+}
+function copiar(txt, el) {
+  var done = function() {
+    var v = el.innerText;
+    el.innerText = '✓ ¡Copiado!';
+    setTimeout(function(){ el.innerText = v; }, 1500);
+  };
+  if (navigator.clipboard) { navigator.clipboard.writeText(txt).then(done, done); }
+  else { var t = document.createElement('textarea'); t.value = txt; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); } catch(e){} document.body.removeChild(t); done(); }
+}
+function filtrar(q) {
+  q = q.toLowerCase();
+  var items = document.querySelectorAll('#todos .cmd');
+  for (var i = 0; i < items.length; i++) {
+    var k = items[i].getAttribute('data-k') + ' ' + items[i].innerText.toLowerCase();
+    if (k.indexOf(q) !== -1) items[i].classList.remove('oculto');
+    else items[i].classList.add('oculto');
+  }
 }
 </script>
 </body>
