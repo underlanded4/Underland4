@@ -51,6 +51,8 @@
   footer { text-align:center; padding:30px; color:#6a7078; font-size:.9em; }
   .nota { color:var(--apagado); font-size:.92em; }
   .oculto { display:none !important; }
+  [data-tip] { border-bottom:1px dotted var(--oro); cursor:help; position:relative; }
+  [data-tip]:hover::after { content:attr(data-tip); position:absolute; left:0; bottom:130%; width:230px; background:#222a36; border:1px solid var(--oro); border-radius:8px; padding:8px 10px; font-size:.85em; color:var(--texto); z-index:20; }
 </style>
 </head>
 <body>
@@ -78,6 +80,7 @@
     <button onclick="tab('t3',this)">💰 Economía &amp; Monedas</button>
     <button onclick="tab('t4',this)">⚔️ Equipo &amp; Runas</button>
     <button onclick="tab('t5',this)">📜 Reglas &amp; Misiones</button>
+    <button onclick="tab('t6',this)">📖 Recetas &amp; Ayuda</button>
   </div>
 
   <div class="tab activo" id="t1">
@@ -120,7 +123,7 @@
     <p class="nota">Atajo: <code>/yunque</code> mirando al yunque. Mesa grande: <code>/mesaforja</code>.</p>
     <h3>✨ Rarezas (Común → Místico)</h3>
     <div class="tabla"><table id="rarezas">
-      <tr><th>Rareza</th><th>Filo</th><th>Daño extra</th></tr>
+      <tr><th>Rareza</th><th><span data-tip="Nivel de Filo aplicado al forjar: más filo = más daño">Filo</span></th><th><span data-tip="Daño extra sobre el golpe base del arma">Daño extra</span></th></tr>
       <tr><td>Común</td><td>V</td><td>+3</td></tr><tr><td>Algo Mejor</td><td>VI</td><td>+3.5</td></tr><tr><td>Mejor</td><td>VII</td><td>+4</td></tr><tr><td>Algo Raro</td><td>VIII</td><td>+4.5</td></tr><tr><td>Raro</td><td>IX</td><td>+5</td></tr><tr><td>Muy Raro</td><td>X</td><td>+5.5</td></tr><tr><td>Algo Legendario</td><td>XI</td><td>+6</td></tr><tr><td>Legendario</td><td>XII</td><td>+6.5</td></tr><tr><td>Muy Legendario</td><td>XIV</td><td>+7.5</td></tr><tr><td>Místico</td><td>XVI</td><td>+8.5</td></tr>
     </table></div>
     <p class="nota">Un Filo V normal da +3. Un Místico da +8.5: casi el triple. La rareza mejora con tu habilidad, nivel y enano ayudante.</p>
@@ -155,6 +158,23 @@
       <li>Respeta a los demás. Nada de grief ni trampas. PvP donde se permite. Los dioses tienen la última palabra.</li>
     </ul>
     <a class="btn ghost" href="https://github.com/underlanded4/Underland4">Ver proyecto en GitHub</a>
+  </div>
+
+  <div class="tab" id="t6">
+    <h2>📖 Recetas de forja (pasa el cursor para ayuda)</h2>
+    <div class="tarjetas">
+      <div class="tarjeta"><b>🟢 Aprendiz</b> (hab. 0, $5,000)<br>1º <span data-tip="Bloques de hierro: pica hierro y comprímelo (9 lingotes = 1 bloque)">16 bloques de hierro</span><br>2º <span data-tip="Cobre de cuevas dripstone; se compra en /materiales">4 cobre</span><br>3º <span data-tip="Palos normales de madera">4 palos</span><br>4º <span data-tip="Libro normal + hueso = espada, sin hueso = martillo">1 libro + hueso opcional</span><br>5º <span data-tip="Un Martillo de Enano debe estar en tu inventario">martillo obligatorio</span></div>
+      <div class="tarjeta"><b>🔵 Guerrero</b> (hab. 5, $20,000)<br>1º <span data-tip="Diamantes de capas profundas">14 diamantes</span><br>2º <span data-tip="Esmeraldas de aldeanos o montaña extrema">4 esmeralda</span><br>3º <span data-tip="Varas ígneas de blazes del Nether">6 varas ígneas</span><br>4º <span data-tip="Libro + mesa de encantamientos">1 libro encantado</span><br>5º martillo obligatorio</div>
+      <div class="tarjeta fuego"><b>🟡 Legendario</b> (hab. 15, $75,000)<br>1º <span data-tip="Netherita: escombros + oro en el Nether">8 lingotes netherita</span><br>2º <span data-tip="10 bloques = 90 diamantes. La receta más cara">10 bloques de diamante</span><br>3º <span data-tip="Fragmentos raros de invasiones y jefes">4 fragmentos</span><br>4º <span data-tip="2 libros normales">2 libros</span><br>5º <span data-tip="Estrella del Nether (mata al Wither)">1 estrella Nether</span><br>6º martillo obligatorio</div>
+      <div class="tarjeta cian"><b>🟣 Yunque Rúnico</b> (hab. 15, $200,000)<br><span data-tip="4 bloques = 36 lingotes de netherita">4 bloques netherita</span><br><span data-tip="8 bloques = 72 diamantes">8 bloques diamante</span><br>Al colocarlo levanta su altar 8x8.</div>
+    </div>
+    <h3>❓ Ayuda rápida</h3>
+    <ul>
+      <li><b>Pack no descarga:</b> borra <code>server-resource-packs</code> de tu instancia, reentra y acepta. O instálalo manual desde el botón de arriba.</li>
+      <li><b>Login:</b> <code>/register &lt;clave&gt; &lt;clave&gt;</code> una vez, luego <code>/login &lt;clave&gt;</code>. Tienes 120 segundos.</li>
+      <li><b>Versión:</b> Java 1.21.4. En Bedrock entra por el puerto Bedrock.</li>
+      <li><b>Sin permisos:</b> la forja es solo enanos (dioses exentos); pide tu raza con <code>/razas</code>.</li>
+    </ul>
   </div>
 
   <div id="comandos">
