@@ -43,7 +43,7 @@
 </head>
 <body>
 <nav>
-  <a href="#entrar">Entrar</a><a href="#razas">Razas</a><a href="#niveles">Niveles</a><a href="#forja">Forja</a><a href="#yunque">Yunque</a><a href="#armas">Armas</a><a href="#runas">Runas</a><a href="#mascotas">Mascotas</a><a href="#cofres">Cofres</a><a href="#invasiones">Invasiones</a><a href="#eco">Economía</a><a href="#muerte">Muerte</a><a href="#misiones">Misiones</a><a href="#comandos">Comandos</a><a href="#reglas">Reglas</a>
+  <a href="#entrar">Entrar</a><a href="#acceso">Acceso</a><a href="#razas">Razas</a><a href="#niveles">Niveles</a><a href="#forja">Forja</a><a href="#yunque">Yunque</a><a href="#armas">Armas</a><a href="#runas">Runas</a><a href="#mascotas">Mascotas</a><a href="#cofres">Cofres</a><a href="#invasiones">Invasiones</a><a href="#eco">Economía</a><a href="#muerte">Muerte</a><a href="#misiones">Misiones</a><a href="#comandos">Comandos</a><a href="#reglas">Reglas</a>
 </nav>
 <header>
   <h1>✦ UNDERLAND V4 ✦</h1>
@@ -64,6 +64,13 @@
   </div>
 </section>
 
+<details id="acceso"><summary>🔑 Cuentas y acceso</summary><div class="cuerpo"><ul>
+  <li>Al entrar por primera vez regístrate: <code>/register &lt;clave&gt; &lt;clave&gt;</code>. Después entra con <code>/login &lt;clave&gt;</code>.</li>
+  <li>Tienes 120 segundos para loguearte y la sesión dura <b>12 horas</b> desde la misma conexión.</li>
+  <li>Tu personaje (raza, clase, progreso) queda ligado a tu <b>nombre</b>: entra siempre con el mismo nombre en Java y Bedrock.</li>
+  <li>Espera unos segundos tras entrar antes de escribir comandos (anti-spam).</li>
+</ul></div></details>
+
 <details open id="razas"><summary>🧬 Razas y clases</summary><div class="cuerpo"><ul>
   <li>Elige <b>raza mortal</b> (humano, elfo/alfar, enano/dvergar…) y súmale una <b>clase divina</b>: <b>Custodes</b> (+defensa), <b>Architect</b> (equipo que dura más), <b>Ragnarok</b> (+daño cuerpo a cuerpo).</li>
   <li><b>Enanos:</b> únicos que pueden usar la Forja y el Yunque Rúnico. Sin penalización por peso legendario.</li>
@@ -83,7 +90,7 @@
   <li><b>Calidades:</b> Aprendiz (nivel 10 + hierro) → Guerrero (nivel 25 + diamantes) → Legendario (nivel 40 + netherita).</li>
   <li>Cada arma sale con <b>ficha completa</b>: daño calculado, durabilidad, creador, calidad, rareza, filo, defecto y mejoras.</li>
   <li><b>Sangrado:</b> golpear con arma forjada aplica wither (hasta 10s en Místico) con llamas del alma.</li>
-  <li>Las piezas legendarias <b>pesan</b>: lentitud si no eres enano. Tabla en <code>/forja</code> → <b>Arsenal</b>, recetas en <b>Cuaderno</b>.</li>
+  <li>Las piezas legendarias <b>pesan</b>: lentitud si no eres enano. Tabla en <code>/forja</code> → <b>Arsenal</b>, recetas en <b>Cuaderno</b>, metales en <b>Materiales</b> y fundición en <b>Hornos</b>.</li>
 </ul>
 <table><tr><th>Rareza</th><th>Filo</th><th>Daño extra</th></tr>
 <tr><td>Común</td><td>V</td><td>+3</td></tr><tr><td>Algo Mejor</td><td>VI</td><td>+3.5</td></tr><tr><td>Mejor</td><td>VII</td><td>+4</td></tr><tr><td>Algo Raro</td><td>VIII</td><td>+4.5</td></tr><tr><td>Raro</td><td>IX</td><td>+5</td></tr><tr><td>Muy Raro</td><td>X</td><td>+5.5</td></tr><tr><td>Algo Legendario</td><td>XI</td><td>+6</td></tr><tr><td>Legendario</td><td>XII</td><td>+6.5</td></tr><tr><td>Muy Legendario</td><td>XIV</td><td>+7.5</td></tr><tr><td>Místico</td><td>XVI</td><td>+8.5</td></tr></table>
@@ -101,6 +108,9 @@
   <li><b>Martillo de Enano:</b> pica en área 3x3, daño en área al golpear, lento de llevar, debilidad si no eres enano.</li>
   <li><b>Espada Estelar:</b> hoja cian con guardia dorada para los alfar; debilidad a otras razas.</li>
   <li><b>Espada Rúnica:</b> premio mayor del cofre rúnico, con aura de poder.</li>
+  <li><b>Pico de Guerra:</b> híbrido que pica en 3x3 y pega como espada, con filo y rareza.</li>
+  <li><b>Martillo Njordr Supremo</b> y <b>Venda Rúnica</b> (cura fracturas y sangrado).</li>
+  <li><b>Efectos de combate:</b> el pico aturde y ciega, el martillo contunde, la estelar marca y juzga. <b>Heridas:</b> bajo de vida sufres fractura + hemorragia.</li>
 </ul></div></details>
 
 <details id="runas"><summary>ᚱ Runas y encantamientos</summary><div class="cuerpo"><ul>
@@ -127,10 +137,10 @@
 <details id="eco"><summary>💰 Economía y vida social</summary><div class="cuerpo"><ul>
   <li><b>Banco</b> (<code>/banco</code> o Bóveda): deposita oro y gana +2% diario.</li>
   <li><b>Correo</b> (<code>/correo &lt;jugador&gt;</code>): escríbele aunque esté offline.</li>
-  <li><b>Lotería:</b> tickets de $500, sorteo diario con bote.</li>
+  <li><b>Lotería rúnica:</b> tickets con número de $100 a $50.000 (<code>/loteria comprar [cant] [apuesta]</code>), mira los tuyos con <code>/loteria misnumeros</code>. Sorteo con rollover, reparto en empates y premio de consuelo. Gratis cada 5 acumulados.</li>
   <li><b>Kits:</b> inicial, diario y semanal (<code>/kits</code>).</li>
   <li><b>Duelos</b> (<code>/duelo &lt;jugador&gt; [apuesta]</code>), <b>mercado</b> y <b>mercader errante</b> con descuentos.</li>
-  <li><b>Tribu:</b> crea la tuya (<code>/tribu</code>), banco común y K/D.</li>
+  <li><b>Tribus fundadas:</b> <b>Hijos del Trueno</b> [TRU], <b>Cuervos de Odín</b> [ODIN], <b>Guardianes del Yggdrasil</b> [YGG] y <b>Osos del Norte</b> [OSO]. Míralas en <code>/tribu</code>: banco común, K/D, alianzas y rivalidades.</li>
 </ul></div></details>
 
 <details id="muerte"><summary>💀 Muerte y regreso</summary><div class="cuerpo"><ul>
@@ -147,7 +157,7 @@
 </ul></div></details>
 
 <details id="comandos"><summary>⌨️ Comandos útiles</summary><div class="cuerpo">
-  <p><code>/menu</code> <code>/perfil</code> <code>/viajes</code> <code>/extras</code> <code>/volver</code> <code>/kit</code> <code>/tienda</code></p>
+  <p><code>/menu</code> <code>/perfil</code> <code>/viajes</code> <code>/extras</code> <code>/volver</code> <code>/kits</code> <code>/yunque</code> <code>/cuaderno</code> <code>/metas</code></p>
   <p class="nota">Atajo universal de recargas (staff): <code>/ureload</code></p>
 </div></details>
 
